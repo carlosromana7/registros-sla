@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard SLA</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 1.25rem;
+        }
+        .card-body {
+            padding: 1.25rem;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .stat-card h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #007bff;
+        }
+        .stat-card p {
+            margin: 10px 0 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+        canvas {
+            width: 100% !important;
+            height: 400px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h4>Dashboard SLA</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <h3>Total de eventos</h3>
+                            <p>{{ total_eventos }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <h3>SLA cumplido</h3>
+                            <p>{{ sla_cumplido_count }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <h3>SLA no cumplido</h3>
+                            <p>{{ sla_no_cumplido_count }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <h3>SLI Promedio</h3>
+                            <p>{{ sli_promedio | round(2) }}%</p>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="sliChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('sliChart').getContext('2d');
+        var sliChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ dias | map(attribute='dia') | list | tojson }},
+                datasets: [
+                    {
+                        label: 'SLA Cumplido',
+                        data: {{ dias | map(attribute='sla_cumplido_count') | list | tojson }},
+                        backgroundColor: 'rgba(46, 204, 113, 0.7)',
+                        borderColor: 'rgba(46, 204, 113, 1)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'SLA No Cumplido',
+                        data: {{ dias | map(attribute='sla_no_cumplido_count') | list | tojson }},
+                        backgroundColor: 'rgba(231, 76, 60, 0.7)',
+                        borderColor: 'rgba(231, 76, 60, 1)',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Día del Mes',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Número de Eventos',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            font: {
+                                size: 14
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

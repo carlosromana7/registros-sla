@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario SLA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        h1 {
+            color: #0d6efd;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .form-label {
+            font-weight: 600;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-container">
+                    <h1><i class="fas fa-clipboard-list"></i> Registro de Evento SLA</h1>
+                    <form action="/submit" method="post">
+                        <div class="mb-4">
+                            <label for="fecha_reporte" class="form-label"><i class="fas fa-calendar-alt"></i> Fecha de Reporte</label>
+                            <input type="datetime-local" class="form-control" id="fecha_reporte" name="fecha_reporte" required>
+                        </div>
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="evento_programado" name="evento_programado">
+                            <label class="form-check-label" for="evento_programado"><i class="fas fa-clock"></i> Evento Programado</label>
+                        </div>
+                        <div class="mb-4">
+                            <label for="descripcion_evento" class="form-label"><i class="fas fa-file-alt"></i> Descripción del Evento</label>
+                            <input type="text" class="form-control" id="descripcion_evento" name="descripcion_evento" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="tipo_problema" class="form-label"><i class="fas fa-exclamation-triangle"></i> Tipo de Problema</label>
+                            <input type="text" class="form-control" id="tipo_problema" name="tipo_problema" required>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label for="proveedor" class="form-label"><i class="fas fa-truck"></i> Proveedor</label>
+                                <input type="text" class="form-control" id="proveedor" name="proveedor" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="empresa" class="form-label"><i class="fas fa-building"></i> Empresa</label>
+                                <input type="text" class="form-control" id="empresa" name="empresa" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="descripcion_problema" class="form-label"><i class="fas fa-comment-alt"></i> Descripción del Problema</label>
+                            <textarea class="form-control" id="descripcion_problema" name="descripcion_problema" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label for="acciones_tomadas" class="form-label"><i class="fas fa-tools"></i> Acciones Tomadas</label>
+                            <textarea class="form-control" id="acciones_tomadas" name="acciones_tomadas" rows="3" required></textarea>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label for="inicio_evento" class="form-label"><i class="fas fa-hourglass-start"></i> Inicio del Evento</label>
+                                <input type="datetime-local" class="form-control" id="inicio_evento" name="inicio_evento" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fin_evento" class="form-label"><i class="fas fa-hourglass-end"></i> Fin del Evento</label>
+                                <input type="datetime-local" class="form-control" id="fin_evento" name="fin_evento" required>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label for="tiempo_inactividad_no_planificada" class="form-label"><i class="fas fa-stopwatch"></i> Tiempo de inactividad NO planificada (hr)</label>
+                                <input type="number" step="0.01" class="form-control" id="tiempo_inactividad_no_planificada" name="tiempo_inactividad_no_planificada" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="tiempo_inactividad_planificada" class="form-label"><i class="far fa-clock"></i> Tiempo de inactividad planificada (hr)</label>
+                                <input type="number" step="0.01" class="form-control" id="tiempo_inactividad_planificada" name="tiempo_inactividad_planificada" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit"><i class="fas fa-paper-plane"></i> Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

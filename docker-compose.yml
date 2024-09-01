@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+  web:
+    build: .
+    command: uvicorn main:app --host 0.0.0.0 --port 8800 --reload
+    volumes:
+      - ./app:/app
+    ports:
+      - "8800:8800"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017/sla_db
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongodb:/data/db
+
+volumes:
+  mongodb_data:
+    driver: local
