@@ -121,8 +121,6 @@ async def get_stats(request: Request):
         event = SLAEvent(**evento)  # Convierte el diccionario en una instancia de SLAEvent
         sli_total += event.sli
         day = event.fecha_reporte.day
-        if day not in day_counts:
-            day_counts[day] = {'sla_cumplido_count': 0, 'sla_no_cumplido_count': 0}
         if event.sla_cumplido:
             day_counts[day]['sla_cumplido_count'] += 1
         else:
